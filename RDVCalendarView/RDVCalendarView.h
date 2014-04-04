@@ -47,6 +47,16 @@ typedef NS_OPTIONS(NSInteger, RDVCalendarViewDayCellSeparatorType) {
 #pragma mark - Configuring a Calendar View
 
 /**
+ * Returns the header view, which contains the month label and the back and forward buttons. (read-only)
+ */
+@property (nonatomic, readonly) UIView *headerView;
+
+/**
+ * Returns the month view, which contains the buttons. (read-only)
+ */
+@property (nonatomic, readonly) UIView *monthView;
+
+/**
  * Returns the label, which contains the name of the currently displayed month. (read-only)
  */
 @property (nonatomic, readonly) UILabel *monthLabel;

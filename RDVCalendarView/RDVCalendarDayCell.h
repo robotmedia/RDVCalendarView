@@ -66,6 +66,11 @@ typedef NS_ENUM(NSInteger, RDVCalendarDayCellSelectionStyle) {
 @property(nonatomic, getter = isSelected) BOOL selected;
 
 /**
+ * A Boolean value that indicates whether the cell is the current day.
+ */
+@property(nonatomic, getter = isCurrent) BOOL current;
+
+/**
  * A Boolean value that indicates whether the cell is highlighted.
  */
 @property(nonatomic, getter = isHighlighted) BOOL highlighted;

@@ -22,7 +22,7 @@
 // THE SOFTWARE.
 
 #import "RDVExampleViewController.h"
-#import "RDVExampleDayCell.h"
+#import "ARANewspaperDayCell.h"
 
 @interface RDVExampleViewController ()
 
@@ -43,22 +43,23 @@
     [super viewDidLoad];
     
     [[self.navigationController navigationBar] setTranslucent:NO];
-    
-    [[self calendarView] registerDayCellClass:[RDVExampleDayCell class]];
-    
-    UIBarButtonItem *todayButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Today", nil)
-                                                                    style:UIBarButtonItemStylePlain
-                                                                   target:[self calendarView]
-                                                                   action:@selector(showCurrentMonth)];
-    [self.navigationItem setRightBarButtonItem:todayButton];
+    self.calendarView.separatorStyle = RDVCalendarViewDayCellSeparatorTypeNone;
+    self.calendarView.headerView.backgroundColor = [UIColor lightGrayColor];
 }
 
-- (void)calendarView:(RDVCalendarView *)calendarView configureDayCell:(RDVCalendarDayCell *)dayCell
-             atIndex:(NSInteger)index {
-    RDVExampleDayCell *exampleDayCell = (RDVExampleDayCell *)dayCell;
-    if (index % 5 == 0) {
-        [[exampleDayCell notificationView] setHidden:NO];
-    }
-}
+//- (void)viewWillLayoutSubviews
+//{
+//    [super viewWillLayoutSubviews];
+//}
+//
+//- (CGFloat)widthForDayCellInCalendarView:(RDVCalendarView *)calendarView
+//{
+//    return 40;
+//}
+//
+//- (CGFloat)heightForDayCellInCalendarView:(RDVCalendarView *)calendarView
+//{
+//    return 40;
+//}
 
 @end

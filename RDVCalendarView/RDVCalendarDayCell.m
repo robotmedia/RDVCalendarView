@@ -39,24 +39,29 @@
         _selectionStyle = RDVCalendarDayCellSelectionStyleDefault;
         
         _backgroundView = [[UIView alloc] init];
-        [_backgroundView setBackgroundColor:[UIColor whiteColor]];
+        _backgroundView.backgroundColor = [UIColor whiteColor];
         [self addSubview:_backgroundView];
         
         _selectedBackgroundView = [[UIView alloc] init];
-        [_selectedBackgroundView setBackgroundColor:[UIColor lightGrayColor]];
-        [_selectedBackgroundView setAlpha:0];
+        _selectedBackgroundView.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.0];
+        _selectedBackgroundView.alpha = 0;
+        _selectedBackgroundView.layer.borderColor = [[UIColor lightGrayColor] CGColor];
+        _selectedBackgroundView.layer.borderWidth = 1.5;
+        _selectedBackgroundView.layer.cornerRadius = 20;
         [self addSubview:_selectedBackgroundView];
         
         _contentView = [[UIView alloc] init];
-        [_contentView setBackgroundColor:[UIColor clearColor]];
+        _contentView.backgroundColor = [UIColor clearColor];
         [self addSubview:_contentView];
         
         _textLabel = [[UILabel alloc] init];
         [_textLabel setTextColor:[UIColor blackColor]];
-        [_textLabel setHighlightedTextColor:[UIColor whiteColor]];
         [_textLabel setBackgroundColor:[UIColor clearColor]];
-        [_textLabel setFont:[UIFont systemFontOfSize:20]];
+        [_textLabel setFont:[UIFont systemFontOfSize:15]];
         [_contentView addSubview:_textLabel];
+        
+        self.layer.cornerRadius = 20;
+        self.clipsToBounds = YES;
     }
     return self;
 }
@@ -85,7 +90,7 @@
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
-    if (selected == _selected) {
+    if (selected == _selected || _current) {
         return;
     }
     
@@ -127,7 +132,7 @@
 }
 
 - (void)setHighlighted:(BOOL)highlighted animated:(BOOL)animated {
-    if (highlighted == _highlighted) {
+    if (highlighted == _highlighted || _current) {
         return;
     }
     
@@ -170,6 +175,7 @@
     [self setSelected:NO];
     [self setHighlighted:NO];
     
+    self.current = NO;
     [[self textLabel] setText:@""];
 }
 

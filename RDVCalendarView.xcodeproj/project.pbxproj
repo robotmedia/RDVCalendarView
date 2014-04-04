@@ -25,7 +25,7 @@
 		B463BCB718265F0400BF5848 /* iPad.png in Resources */ = {isa = PBXBuildFile; fileRef = B463BCB318265F0400BF5848 /* iPad.png */; };
 		B463BCB818265F0400BF5848 /* iPhone-small.png in Resources */ = {isa = PBXBuildFile; fileRef = B463BCB418265F0400BF5848 /* iPhone-small.png */; };
 		B463BCB918265F0400BF5848 /* iPhone.png in Resources */ = {isa = PBXBuildFile; fileRef = B463BCB518265F0400BF5848 /* iPhone.png */; };
-		B463BCBD1826682B00BF5848 /* RDVExampleDayCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B463BCBB1826673500BF5848 /* RDVExampleDayCell.m */; };
+		B463BCBD1826682B00BF5848 /* ARANewspaperDayCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B463BCBB1826673500BF5848 /* ARANewspaperDayCell.m */; };
 		B46DECE11823FE5400D4A823 /* RDVExampleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B46DECE01823FE5400D4A823 /* RDVExampleViewController.m */; };
 /* End PBXBuildFile section */
 
@@ -55,8 +55,8 @@
 		B463BCB318265F0400BF5848 /* iPad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = iPad.png; sourceTree = "<group>"; };
 		B463BCB418265F0400BF5848 /* iPhone-small.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "iPhone-small.png"; sourceTree = "<group>"; };
 		B463BCB518265F0400BF5848 /* iPhone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = iPhone.png; sourceTree = "<group>"; };
-		B463BCBA1826673500BF5848 /* RDVExampleDayCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RDVExampleDayCell.h; sourceTree = "<group>"; };
-		B463BCBB1826673500BF5848 /* RDVExampleDayCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RDVExampleDayCell.m; sourceTree = "<group>"; };
+		B463BCBA1826673500BF5848 /* ARANewspaperDayCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARANewspaperDayCell.h; sourceTree = "<group>"; };
+		B463BCBB1826673500BF5848 /* ARANewspaperDayCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ARANewspaperDayCell.m; sourceTree = "<group>"; };
 		B46DECDF1823FE5400D4A823 /* RDVExampleViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RDVExampleViewController.h; sourceTree = "<group>"; };
 		B46DECE01823FE5400D4A823 /* RDVExampleViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RDVExampleViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -105,8 +105,8 @@
 				62C2389917CB472B009B4090 /* RDVAppDelegate.m */,
 				B46DECDF1823FE5400D4A823 /* RDVExampleViewController.h */,
 				B46DECE01823FE5400D4A823 /* RDVExampleViewController.m */,
-				B463BCBA1826673500BF5848 /* RDVExampleDayCell.h */,
-				B463BCBB1826673500BF5848 /* RDVExampleDayCell.m */,
+				B463BCBA1826673500BF5848 /* ARANewspaperDayCell.h */,
+				B463BCBB1826673500BF5848 /* ARANewspaperDayCell.m */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -243,7 +243,7 @@
 				62F77D5A17BE0105009873CE /* RDVCalendarDayCell.m in Sources */,
 				62C2389317CB463C009B4090 /* main.m in Sources */,
 				62C2389A17CB472B009B4090 /* RDVAppDelegate.m in Sources */,
-				B463BCBD1826682B00BF5848 /* RDVExampleDayCell.m in Sources */,
+				B463BCBD1826682B00BF5848 /* ARANewspaperDayCell.m in Sources */,
 				B46DECE11823FE5400D4A823 /* RDVExampleViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
