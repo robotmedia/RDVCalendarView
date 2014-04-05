@@ -143,6 +143,10 @@
     
     [self updateMonthLabelMonth:_month];
     [self updateMonthViewMonth:_month];
+    
+    _monthLabel.textColor = [self.delegate colorForHeaderText:self];
+    [_backButton setTitleColor:[self.delegate colorForHeaderText:self] forState:UIControlStateNormal];
+    [_forwardButton setTitleColor:[self.delegate colorForHeaderText:self] forState:UIControlStateNormal];
 }
 
 - (void)dealloc {
@@ -383,12 +387,19 @@
         weekSymbols = [weekDays copy];
     }
     
+    UIColor *fontColor = [UIColor blackColor];
+    if ([self.delegate respondsToSelector:@selector(colorForHeaderText:)])
+    {
+        fontColor = [self.delegate colorForHeaderText:self];
+    }
+    
     _weekdayHeaderLabels = [[NSMutableArray alloc] initWithCapacity:[weekSymbols count]];
     for (NSString *weekday in weekSymbols) {
         UILabel *weekdayHeader = [[UILabel alloc] init];
         weekdayHeader.text = weekday;
         weekdayHeader.textAlignment = NSTextAlignmentCenter;
         weekdayHeader.font = [UIFont systemFontOfSize:12];
+        weekdayHeader.textColor = fontColor;
         [_weekdayHeaderLabels addObject:weekdayHeader];
     }
 }

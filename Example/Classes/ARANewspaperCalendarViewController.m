@@ -83,4 +83,9 @@
     return 40;
 }
 
+- (UIColor *)colorForHeaderText:(RDVCalendarView *)calendarView
+{
+    return [UIColor whiteColor];
+}
+
 @end

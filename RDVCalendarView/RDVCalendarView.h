@@ -291,4 +291,9 @@ typedef NS_OPTIONS(NSInteger, RDVCalendarViewDayCellSeparatorType) {
  */
 - (CGRect)frameForMonthViewCalendarView:(RDVCalendarView *)calendarView;
 
+/**
+ * Asks the delegate for the color to use in the header text.
+ */
+- (UIColor*)colorForHeaderText:(RDVCalendarView *)calendarView;
+
 @end
