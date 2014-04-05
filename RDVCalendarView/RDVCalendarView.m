@@ -174,7 +174,7 @@
     
     CGSize previousMonthButtonSize = CGSizeMake(backButtonWidth, 50);
     CGSize nextMonthButtonSize = CGSizeMake(forwardButtonWidth, 50);
-    CGSize titleSize = CGSizeMake(viewSize.width - previousMonthButtonSize.width - nextMonthButtonSize.width - 10 - 10, 15);
+    CGSize titleSize = CGSizeMake(viewSize.width - previousMonthButtonSize.width - nextMonthButtonSize.width - 10 - 10, 22);
     
     // Layout header view
     
@@ -183,7 +183,7 @@
     [[self backButton] setFrame:CGRectMake(10, roundf(headerTopSize.height / 2 - previousMonthButtonSize.height / 2),
                                          previousMonthButtonSize.width, previousMonthButtonSize.height)];
     
-    [[self monthLabel] setFrame:CGRectMake(roundf(headerTopSize.width / 2 - titleSize.width / 2), 13,
+    [[self monthLabel] setFrame:CGRectMake(roundf(headerTopSize.width / 2 - titleSize.width / 2), 9,
                                          titleSize.width, titleSize.height)];
     
     [[self forwardButton] setFrame:CGRectMake(headerTopSize.width - 10 - nextMonthButtonSize.width,
