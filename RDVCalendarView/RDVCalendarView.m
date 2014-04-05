@@ -408,9 +408,9 @@
 {
     NSString *monthName;
     NSDate *date = [month.calendar dateFromComponents:month];
+    NSDateComponents *dateComponents = [[self calendar] components:NSMonthCalendarUnit|NSYearCalendarUnit fromDate:date];
     if ([self.delegate respondsToSelector:@selector(monthNamesForCalendarView:)])
     {
-        NSDateComponents *dateComponents = [[self calendar] components:NSMonthCalendarUnit fromDate:date];
         monthName = [self.delegate monthNamesForCalendarView:self][dateComponents.month - 1];
     }
     else
@@ -420,7 +420,7 @@
         monthName = [formatter stringFromDate:date];
     }
 
-    self.monthLabel.text = [NSString stringWithFormat:@"%@ %ld", monthName, month.year];
+    self.monthLabel.text = [NSString stringWithFormat:@"%@ %ld", monthName, dateComponents.year];
 }
 
 - (void)updateMonthViewMonth:(NSDateComponents *)month
