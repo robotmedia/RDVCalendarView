@@ -34,7 +34,7 @@
     self.calendarView.separatorStyle = RDVCalendarViewDayCellSeparatorTypeNone;
     self.calendarView.dayCellEdgeInsets = UIEdgeInsetsZero;
     
-//    [self.calendarView registerDayCellClass:[ARANewspaperDayCell class]];
+    [self.calendarView registerDayCellClass:[ARANewspaperDayCell class]];
 }
 
 - (NSArray *)monthNamesForCalendarView:(RDVCalendarView *)calendarView
