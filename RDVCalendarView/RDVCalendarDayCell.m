@@ -32,7 +32,8 @@
 
 @implementation RDVCalendarDayCell
 
-- (id)initWithReuseIdentifier:(NSString *)reuseIdentifier {
+- (id)initWithReuseIdentifier:(NSString *)reuseIdentifier
+{
     self = [super init];
     if (self) {
         _reuseIdentifier = [reuseIdentifier copy];
@@ -43,11 +44,8 @@
         [self addSubview:_backgroundView];
         
         _selectedBackgroundView = [[UIView alloc] init];
-        _selectedBackgroundView.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.0];
+        _selectedBackgroundView.backgroundColor = [UIColor grayColor];
         _selectedBackgroundView.alpha = 0;
-        _selectedBackgroundView.layer.borderColor = [[UIColor lightGrayColor] CGColor];
-        _selectedBackgroundView.layer.borderWidth = 1.5;
-        _selectedBackgroundView.layer.cornerRadius = 20;
         [self addSubview:_selectedBackgroundView];
         
         _contentView = [[UIView alloc] init];
@@ -55,22 +53,21 @@
         [self addSubview:_contentView];
         
         _textLabel = [[UILabel alloc] init];
-        [_textLabel setTextColor:[UIColor blackColor]];
-        [_textLabel setBackgroundColor:[UIColor clearColor]];
-        [_textLabel setFont:[UIFont systemFontOfSize:15]];
+        _textLabel.textColor = [UIColor blackColor];
+        _textLabel.backgroundColor = [UIColor clearColor];
+        _textLabel.font = [UIFont systemFontOfSize:15];
         [_contentView addSubview:_textLabel];
-        
-        self.layer.cornerRadius = 20;
-        self.clipsToBounds = YES;
     }
     return self;
 }
 
-- (id)init {
-    return [self initWithReuseIdentifier:@""];
+- (id)init
+{
+    return [self initWithReuseIdentifier:@"CalendarCell"];
 }
 
-- (void)layoutSubviews {
+- (void)layoutSubviews
+{
     CGSize frameSize = self.frame.size;
     CGSize titleSize = [[self textLabel] sizeThatFits:CGSizeMake(frameSize.width, frameSize.height)];
     
@@ -85,93 +82,117 @@
 
 #pragma mark - Selection
 
-- (BOOL)isSelected {
+- (BOOL)isSelected
+{
     return _selected;
 }
 
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated {
-    if (selected == _selected || _current) {
-        return;
-    }
+- (void)setSelected:(BOOL)selected animated:(BOOL)animated
+{
+    if (selected == _selected || _current) return;
     
     _selected = selected;
     _highlighted = NO;
     
-    if ([self selectionStyle] != RDVCalendarDayCellSelectionStyleNone) {
+    if ([self selectionStyle] != RDVCalendarDayCellSelectionStyleNone)
+    {
         __weak RDVCalendarDayCell *weakSelf = self;
         
         void (^block)() = ^{
-            if (selected) {
+            if (selected)
+            {
                 [[weakSelf backgroundView] setAlpha:0.0f];
                 [[weakSelf selectedBackgroundView] setAlpha:1.0f];
-            } else {
+            }
+            else
+            {
                 [[weakSelf backgroundView] setAlpha:1.0f];
                 [[weakSelf selectedBackgroundView] setAlpha:0.0f];
             }
-            for (id subview in [[weakSelf contentView] subviews]) {
-                if ([subview respondsToSelector:@selector(setHighlighted:)]) {
+            
+            for (id subview in [[weakSelf contentView] subviews])
+            {
+                if ([subview respondsToSelector:@selector(setHighlighted:)])
+                {
                     [subview setHighlighted:selected];
                 }
             }
         };
         
-        if (animated) {
+        if (animated)
+        {
             [UIView animateWithDuration:0.25f animations:block];
-        } else {
+        }
+        else
+        {
             block();
         }
     }
 }
 
-- (void)setSelected:(BOOL)selected {
+- (void)setSelected:(BOOL)selected
+{
     [self setSelected:selected animated:NO];
 }
 
-- (BOOL)isHighlighted {
+- (BOOL)isHighlighted
+
+{
     return _highlighted;
 }
 
-- (void)setHighlighted:(BOOL)highlighted animated:(BOOL)animated {
-    if (highlighted == _highlighted || _current) {
-        return;
-    }
+- (void)setHighlighted:(BOOL)highlighted animated:(BOOL)animated
+{
+    if (highlighted == _highlighted || _current) return;
     
     _highlighted = highlighted;
     _selected = NO;
     
-    if ([self selectionStyle] != RDVCalendarDayCellSelectionStyleNone) {
+    if ([self selectionStyle] != RDVCalendarDayCellSelectionStyleNone)
+    {
         __weak RDVCalendarDayCell *weakSelf = self;
         
         void (^block)() = ^{
-            if (highlighted) {
+            if (highlighted)
+            {
                 [[weakSelf backgroundView] setAlpha:0.0f];
                 [[weakSelf selectedBackgroundView] setAlpha:1.0f];
-            } else {
+            }
+            else
+            {
                 [[weakSelf backgroundView] setAlpha:1.0f];
                 [[weakSelf selectedBackgroundView] setAlpha:0.0f];
             }
-            for (id subview in [[weakSelf contentView] subviews]) {
-                if ([subview respondsToSelector:@selector(setHighlighted:)]) {
+            
+            for (id subview in [[weakSelf contentView] subviews])
+            {
+                if ([subview respondsToSelector:@selector(setHighlighted:)])
+                {
                     [subview setHighlighted:highlighted];
                 }
             }
         };
         
-        if (animated) {
+        if (animated)
+        {
             [UIView animateWithDuration:0.25f animations:block];
-        } else {
+        }
+        else
+        {
             block();
         }
     }
 }
 
-- (void)setHighlighted:(BOOL)highlighted {
+- (void)setHighlighted:(BOOL)highlighted
+{
     [self setHighlighted:highlighted animated:NO];
 }
 
 #pragma mark - Cell reuse
 
-- (void)prepareForReuse {
+- (void)prepareForReuse
+{
     [self setSelected:NO];
     [self setHighlighted:NO];
     

@@ -42,7 +42,7 @@ typedef NS_OPTIONS(NSInteger, RDVCalendarViewDayCellSeparatorType) {
 /**
  * The object that acts as the delegate of the receiving calendar view.
  */
-@property (weak) id <RDVCalendarViewDelegate> delegate;
+@property (nonatomic, weak) id <RDVCalendarViewDelegate> delegate;
 
 #pragma mark - Configuring a Calendar View
 
@@ -275,5 +275,20 @@ typedef NS_OPTIONS(NSInteger, RDVCalendarViewDayCellSeparatorType) {
  */
 - (void)calendarView:(RDVCalendarView *)calendarView configureDayCell:(RDVCalendarDayCell *)dayCell
              atIndex:(NSInteger)index;
+
+/**
+ * Asks the delegate for the month names.
+ */
+- (NSArray *)monthNamesForCalendarView:(RDVCalendarView *)calendarView;
+
+/**
+ * Asks the delegate for the weekday names.
+ */
+- (NSArray *)weekdayNamesForCalendarView:(RDVCalendarView *)calendarView;
+
+/**
+ * Asks the delegate for the frame to use for the month view.
+ */
+- (CGRect)frameForMonthViewCalendarView:(RDVCalendarView *)calendarView;
 
 @end

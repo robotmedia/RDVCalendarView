@@ -66,19 +66,14 @@
         // Setup defaults
         
         _currentDayColor = [UIColor colorWithRed:80/255.0 green:200/255.0 blue:240/255.0 alpha:1.0];
-        _selectedDayColor = [UIColor whiteColor];
+        _selectedDayColor = [UIColor grayColor];
         _separatorColor = [UIColor lightGrayColor];
         
         _separatorEdgeInsets = UIEdgeInsetsZero;
         _dayCellEdgeInsets = UIEdgeInsetsZero;
         
         _dayCellClass = [RDVCalendarDayCell class];
-        
-        _dayCellHeight = 40.0f;
-        _dayCellWidth = 40.0f;
-        
-        _dayCellEdgeInsets = UIEdgeInsetsZero;
-        
+                
         // Setup header view
         _headerView = [[UIView alloc] init];
         [self addSubview:_headerView];
@@ -108,27 +103,8 @@
         _monthView = [[UIView alloc] init];
         [self addSubview:_monthView];
         
-        [self setupWeekDays];
-        
         // Setup calendar
-        
-        NSCalendar *calendar = [self calendar];
-        
-        _currentDay = [calendar components:NSDayCalendarUnit|NSMonthCalendarUnit|NSYearCalendarUnit fromDate:[NSDate date]];
-        
-        NSDate *currentDate = [NSDate date];
-        
-        _month = [calendar components:NSYearCalendarUnit|
-                                      NSMonthCalendarUnit|
-                                      NSDayCalendarUnit|
-                                      NSWeekdayCalendarUnit|
-                                      NSCalendarCalendarUnit
-                             fromDate:currentDate];
-        _month.day = 1;
-        
-        [self updateMonthLabelMonth:_month];
-        
-        [self updateMonthViewMonth:_month];
+        [self setupCalendar];
         
         NSNotificationCenter *defaultCenter = [NSNotificationCenter defaultCenter];
         
@@ -147,15 +123,47 @@
     return self;
 }
 
+- (void)setupCalendar
+{
+    [self setupWeekDays];
+
+    NSCalendar *calendar = [self calendar];
+    
+    _currentDay = [calendar components:NSDayCalendarUnit|NSMonthCalendarUnit|NSYearCalendarUnit fromDate:[NSDate date]];
+    
+    NSDate *currentDate = [NSDate date];
+    
+    _month = [calendar components:NSYearCalendarUnit|
+              NSMonthCalendarUnit|
+              NSDayCalendarUnit|
+              NSWeekdayCalendarUnit|
+              NSCalendarCalendarUnit
+                         fromDate:currentDate];
+    _month.day = 1;
+    
+    [self updateMonthLabelMonth:_month];
+    [self updateMonthViewMonth:_month];
+}
+
 - (void)dealloc {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)layoutSubviews {
-    CGRect monthFrame = CGRectMake(10, 68, 300, 280);
-    CGSize viewSize = monthFrame.size;
+    CGRect monthFrame;
+    
     CGSize headerSize = CGSizeMake(self.frame.size.width, 59.0f);
     CGSize headerTopSize = CGSizeMake(self.frame.size.width, 36.0f);
+    if ([self.delegate respondsToSelector:@selector(frameForMonthViewCalendarView:)])
+    {
+        monthFrame = [self.delegate frameForMonthViewCalendarView:self];
+    }
+    else
+    {
+        monthFrame = CGRectMake(0, headerSize.height, CGRectGetWidth(self.frame), CGRectGetHeight(self.frame) - headerSize.height);
+    }
+    
+    CGSize viewSize = monthFrame.size;
 
     CGFloat backButtonWidth = MAX([[self backButton] sizeThatFits:CGSizeMake(100, 50)].width, 44);
     CGFloat forwardButtonWidth = MAX([[self forwardButton] sizeThatFits:CGSizeMake(100, 50)].width, 44);
@@ -299,6 +307,14 @@
     }
 }
 
+#pragma mark - Delegate
+
+- (void)setDelegate:(id<RDVCalendarViewDelegate>)delegate
+{
+    _delegate = delegate;
+    [self setupCalendar];
+}
+
 #pragma mark - Creating Calendar View Day Cells
 
 - (void)registerDayCellClass:(Class)cellClass {
@@ -333,16 +349,38 @@
     return calendar;
 }
 
-- (void)setupWeekDays {
-    NSArray * const weekSymbols = @[NSLocalizedString(@"Dl", @""),
-                                    NSLocalizedString(@"Dt", @""),
-                                    NSLocalizedString(@"Dc", @""),
-                                    NSLocalizedString(@"Dj", @""),
-                                    NSLocalizedString(@"Dv", @""),
-                                    NSLocalizedString(@"Ds", @""),
-                                    NSLocalizedString(@"Dg", @"")];
+- (void)setupWeekDays
+{
+    NSArray *weekSymbols;
+    if ([self.delegate respondsToSelector:@selector(weekdayNamesForCalendarView:)])
+    {
+        weekSymbols = [self.delegate weekdayNamesForCalendarView:self];
+    }
+    else
+    {
+        NSCalendar *calendar = [self calendar];
+        NSInteger firstWeekDay = [calendar firstWeekday] - 1;
+        
+        // We need an NSDateFormatter to have access to the localized weekday strings
+        NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+        
+        weekSymbols = [formatter shortWeekdaySymbols];
+        
+        // weekdaySymbols returns and array of strings
+        NSMutableArray *weekDays = [[NSMutableArray alloc] initWithCapacity:[weekSymbols count]];
+        for (NSInteger day = firstWeekDay; day < [weekSymbols count]; day++) {
+            [weekDays addObject:[weekSymbols objectAtIndex:day]];
+        }
+        
+        if (firstWeekDay != 0) {
+            for (NSInteger day = 0; day < firstWeekDay; day++) {
+                [weekDays addObject:[weekSymbols objectAtIndex:day]];
+            }
+        }
+        
+        weekSymbols = [weekDays copy];
+    }
     
-    // weekdaySymbols returns and array of strings
     _weekdayHeaderLabels = [[NSMutableArray alloc] initWithCapacity:[weekSymbols count]];
     for (NSString *weekday in weekSymbols) {
         UILabel *weekdayHeader = [[UILabel alloc] init];
@@ -353,27 +391,26 @@
     }
 }
 
-
-
 - (void)updateMonthLabelMonth:(NSDateComponents*)month
 {
-    NSArray * const months = @[NSLocalizedString(@"GENER", @""),
-                               NSLocalizedString(@"FEBRER", @""),
-                               NSLocalizedString(@"MARÇ", @""),
-                               NSLocalizedString(@"ABRIL", @""),
-                               NSLocalizedString(@"MAIG", @""),
-                               NSLocalizedString(@"JUNY", @""),
-                               NSLocalizedString(@"JULIOL", @""),
-                               NSLocalizedString(@"AGOST", @""),
-                               NSLocalizedString(@"SETEMBRE", @""),
-                               NSLocalizedString(@"OCTUBRE", @""),
-                               NSLocalizedString(@"NOVEMBRE", @""),
-                               NSLocalizedString(@"DESEMBRE", @"")];
-    
-    self.monthLabel.text = [NSString stringWithFormat:@"%@ %ld", months[month.month], month.year];
+    NSString *monthName;
+    if ([self.delegate respondsToSelector:@selector(monthNamesForCalendarView:)])
+    {
+        monthName = [self.delegate monthNamesForCalendarView:self][month.month - 1];
+    }
+    else
+    {
+        NSDateFormatter * const formatter = [[NSDateFormatter alloc] init];
+        formatter.dateFormat = @"MMMM";
+        NSDate *date = [month.calendar dateFromComponents:month];
+        monthName = [formatter stringFromDate:date];
+    }
+
+    self.monthLabel.text = [NSString stringWithFormat:@"%@ %ld", monthName, month.year];
 }
 
-- (void)updateMonthViewMonth:(NSDateComponents *)month {
+- (void)updateMonthViewMonth:(NSDateComponents *)month
+{
     [self setFirstDay:[month.calendar dateFromComponents:month]];
     [self reloadData];
 }

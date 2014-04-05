@@ -10,6 +10,4 @@
 
 @interface ARANewspaperDayCell : RDVCalendarDayCell
 
-@property (nonatomic) UIView *downloadedView;
-
 @end

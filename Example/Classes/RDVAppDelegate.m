@@ -22,7 +22,7 @@
 // THE SOFTWARE.
 
 #import "RDVAppDelegate.h"
-#import "RDVExampleViewController.h"
+#import "ARANewspaperCalendarViewController.h"
 
 @implementation RDVAppDelegate
 
@@ -31,7 +31,7 @@
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     self.window.backgroundColor = [UIColor whiteColor];
     
-    UIViewController *calendarViewController = [[RDVExampleViewController alloc] init];
+    UIViewController *calendarViewController = [[ARANewspaperCalendarViewController alloc] init];
     UIViewController *navigationController = [[UINavigationController alloc] initWithRootViewController:calendarViewController];
     [self.window setRootViewController:navigationController];
     
