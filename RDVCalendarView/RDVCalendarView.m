@@ -407,15 +407,16 @@
 - (void)updateMonthLabelMonth:(NSDateComponents*)month
 {
     NSString *monthName;
+    NSDate *date = [month.calendar dateFromComponents:month];
     if ([self.delegate respondsToSelector:@selector(monthNamesForCalendarView:)])
     {
-        monthName = [self.delegate monthNamesForCalendarView:self][month.month - 1];
+        NSDateComponents *dateComponents = [[self calendar] components:NSMonthCalendarUnit fromDate:date];
+        monthName = [self.delegate monthNamesForCalendarView:self][dateComponents.month - 1];
     }
     else
     {
         NSDateFormatter * const formatter = [[NSDateFormatter alloc] init];
         formatter.dateFormat = @"MMMM";
-        NSDate *date = [month.calendar dateFromComponents:month];
         monthName = [formatter stringFromDate:date];
     }
 
