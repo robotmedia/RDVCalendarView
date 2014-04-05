@@ -188,7 +188,7 @@
     
     // Calculate sizes and distances
     
-    CGFloat rowCount = 5; // 6 is the maximum number of weeks in a month
+    CGFloat rowCount = 6; // 6 is the maximum number of weeks in a month
     
     CGFloat dayWidth = 0;
     if ([[self delegate] respondsToSelector:@selector(widthForDayCellInCalendarView:)]) {
@@ -234,8 +234,10 @@
     // Week days layout
     // Calendar grid layout
     
+    _monthView.frame = monthFrame;
+    
     CGFloat startigCalendarY = CGRectGetMinY(monthFrame);
-    CGFloat elementVerticalDistance = round(((monthFrame.size.height - startigCalendarY) - [self dayCellEdgeInsets].top -
+    CGFloat elementVerticalDistance = round((monthFrame.size.height - [self dayCellEdgeInsets].top -
                                              [self dayCellEdgeInsets].bottom - (dayHeight * rowCount)) / rowCount);
     
     column = 7 - [self numberOfDaysInFirstWeek];

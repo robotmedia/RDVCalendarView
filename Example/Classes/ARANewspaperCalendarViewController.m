@@ -70,7 +70,7 @@
 
 - (CGRect)frameForMonthViewCalendarView:(RDVCalendarView *)calendarView
 {
-    return CGRectMake(10, 68, 300, 280);
+    return CGRectMake(10, 68, 300, 250);
 }
 
 - (CGFloat)widthForDayCellInCalendarView:(RDVCalendarView *)calendarView
