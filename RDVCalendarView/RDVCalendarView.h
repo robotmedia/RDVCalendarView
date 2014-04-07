@@ -296,4 +296,9 @@ typedef NS_OPTIONS(NSInteger, RDVCalendarViewDayCellSeparatorType) {
  */
 - (UIColor*)colorForHeaderText:(RDVCalendarView *)calendarView;
 
+/**
+ * Asks the delegate for the calendar to use.
+ */
+- (NSCalendar*)calendarForCalendarView:(RDVCalendarView *)calendarView;
+
 @end

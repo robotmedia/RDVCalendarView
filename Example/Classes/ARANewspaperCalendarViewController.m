@@ -68,6 +68,13 @@
     return weekSymbols;
 }
 
+- (NSCalendar *)calendarForCalendarView:(RDVCalendarView *)calendarView
+{
+    NSCalendar *customCalendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+    [customCalendar setFirstWeekday:2]; // Sunday == 1, Saturday == 7
+    return customCalendar;
+}
+
 - (CGRect)frameForMonthViewCalendarView:(RDVCalendarView *)calendarView
 {
     return CGRectMake(10, 68, 300, 250);

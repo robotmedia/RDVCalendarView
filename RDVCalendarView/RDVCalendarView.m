@@ -43,6 +43,8 @@
     Class _dayCellClass;
     
     UIInterfaceOrientation _orientation;
+    
+    NSCalendar *_calendar;
 }
 
 @property (atomic, strong) NSDateComponents *selectedDay;
@@ -127,6 +129,7 @@
 {
     [self setupWeekDays];
 
+    _calendar = nil;
     NSCalendar *calendar = [self calendar];
     
     _currentDay = [calendar components:NSDayCalendarUnit|NSMonthCalendarUnit|NSYearCalendarUnit fromDate:[NSDate date]];
@@ -347,12 +350,17 @@
 #pragma mark - Set up a calendar view
 
 - (NSCalendar *)calendar {
-    static NSCalendar *calendar = nil;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        calendar = [NSCalendar autoupdatingCurrentCalendar];
-    });
-    return calendar;
+    if (!_calendar) {
+        if ([[self delegate] respondsToSelector:@selector(calendarForCalendarView:)])
+        {
+            _calendar = [[self delegate] calendarForCalendarView:self];
+        }
+        else
+        {
+            _calendar = [NSCalendar autoupdatingCurrentCalendar];
+        }
+    }
+    return _calendar;
 }
 
 - (void)setupWeekDays
