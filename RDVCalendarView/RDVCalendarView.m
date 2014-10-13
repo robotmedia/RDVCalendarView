@@ -428,7 +428,7 @@
         monthName = [formatter stringFromDate:date];
     }
 
-    self.monthLabel.text = [NSString stringWithFormat:@"%@ %ld", monthName, dateComponents.year];
+    self.monthLabel.text = [NSString stringWithFormat:@"%@ %ld", monthName, (long)dateComponents.year];
 }
 
 - (void)updateMonthViewMonth:(NSDateComponents *)month
@@ -544,7 +544,7 @@
     
     if (![[self visibleCells] containsObject:dayCell]) {
         [dayCell prepareForReuse];
-        [dayCell.textLabel setText:[NSString stringWithFormat:@"%ld", index + 1]];
+        [dayCell.textLabel setText:[NSString stringWithFormat:@"%ld", (long)index + 1]];
         
         if (index + 1 == [self currentDay].day &&
             [self month].month == [self currentDay].month &&
